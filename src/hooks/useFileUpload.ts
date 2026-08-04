@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 function useFileUpload() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [error, setError] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,12 +38,36 @@ function useFileUpload() {
     validateFile(file);
   }
 
+  function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    setIsDragging(true);
+  }
+
+  function handleDragLeave() {
+    setIsDragging(false);
+  }
+
+  function handleDrop(event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    setIsDragging(false);
+
+    const file = event.dataTransfer.files?.[0];
+
+    if (!file) return;
+
+    validateFile(file);
+  }
+
   return {
     selectedFile,
     error,
+    isDragging,
     inputRef,
     handleChooseFile,
     handleFileChange,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
     validateFile,
   };
 }

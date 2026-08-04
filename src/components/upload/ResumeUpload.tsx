@@ -5,13 +5,26 @@ function ResumeUpload() {
   const {
     selectedFile,
     error,
+    isDragging,
     inputRef,
     handleChooseFile,
     handleFileChange,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
   } = useFileUpload();
 
   return (
-    <section className="mt-16 rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-10 text-center transition hover:border-black">
+    <section
+      className={`mt-16 rounded-2xl border-2 border-dashed p-10 text-center transition ${
+        isDragging
+          ? "border-blue-500 bg-blue-50"
+          : "border-gray-300 bg-gray-50 hover:border-black"
+      }`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
       <h2 className="text-3xl font-bold">
         Upload Your Resume
       </h2>

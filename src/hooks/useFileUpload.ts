@@ -68,7 +68,6 @@ function useFileUpload() {
     handleDragOver,
     handleDragLeave,
     handleDrop,
-    validateFile,
   };
 }
 

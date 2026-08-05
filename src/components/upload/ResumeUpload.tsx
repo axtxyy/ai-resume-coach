@@ -30,8 +30,16 @@ function ResumeUpload() {
       </h2>
 
       <p className="mt-3 text-gray-600">
-        PDF only • Maximum size 5 MB
+        Drag & Drop your PDF here or choose a file
       </p>
+
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".pdf"
+        className="hidden"
+        onChange={handleFileChange}
+      />
 
       <div className="mt-8">
         <Button onClick={handleChooseFile}>
@@ -56,14 +64,6 @@ function ResumeUpload() {
           </p>
         </div>
       )}
-
-      <input
-        ref={inputRef}
-        type="file"
-        accept=".pdf"
-        className="hidden"
-        onChange={handleFileChange}
-      />
     </section>
   );
 }

@@ -1,7 +1,5 @@
 [build]
-builder = "docker"
-dockerfilePath = "server/Dockerfile"
-dockerContext = "."
+builder = "nixpacks"
 rootDirectory = "server"
 
 [deploy]

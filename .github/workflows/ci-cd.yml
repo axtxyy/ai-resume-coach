@@ -107,7 +107,27 @@ jobs:
       - name: Deploy to Fly.io
         uses: superfly/flyctl-actions@1.5
         with:
-          args: "deploy --config fly.toml --app ai-resume-coach-api --remote-only"
+          args: "deploy --config fly.toml --app ai-resume-coach-api --remote-only --yes"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+
+      - name: Set NVIDIA_API_KEY secret on Fly.io
+        uses: superfly/flyctl-actions@1.5
+        with:
+          args: "secrets set NVIDIA_API_KEY=${{ secrets.NVIDIA_API_KEY }} --app ai-resume-coach-api"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Get Fly.io app URL
+        id: fly-url
+        uses: superfly/flyctl-actions@1.5
+        with:
+          args: "status --app ai-resume-coach-api --json"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Output Fly.io URL
+        run: |
+          echo "Fly.io app deployed!"
+          echo "Check the logs above for the hostname"
